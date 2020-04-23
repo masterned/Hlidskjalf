@@ -1,0 +1,42 @@
+{
+  "name": "hlidskjalf",
+  "version": "0.1.0",
+  "description": "A JavaScript game engine to power TeamHatguy's game development.",
+  "main": "build/main.js",
+  "scripts": {
+    "lint": "eslint -c ./configuration/.eslintrc source/renderer.js --fix",
+    "build": "babel --config-file ./configuration/babel.config.js -d ./build source",
+    "start": "electron .",
+    "test": "jest --config ./configuration/jest.config.js --watch --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masterned/Hlidskjalf.git"
+  },
+  "keywords": [
+    "game-engine",
+    "javascript",
+    "fp",
+    "ecs",
+    "electron"
+  ],
+  "author": "Spencer Dent",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/masterned/Hlidskjalf/issues"
+  },
+  "homepage": "https://github.com/masterned/Hlidskjalf#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "babel-jest": "^25.3.0",
+    "electron": "^8.2.1",
+    "eslint": "^6.8.0",
+    "jest": "^25.3.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2"
+  }
+}
