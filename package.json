@@ -5,7 +5,7 @@
   "main": "build/main.js",
   "scripts": {
     "lint": "eslint -c ./configuration/.eslintrc source/renderer.js --fix",
-    "build": "babel --config-file ./configuration/babel.config.js -d ./build source",
+    "build": "rm -r build/* && babel --config-file ./configuration/babel.config.js -d ./build source",
     "start": "electron .",
     "test": "jest --config ./configuration/jest.config.js --watch --coverage"
   },
