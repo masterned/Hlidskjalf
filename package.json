@@ -2,10 +2,9 @@
   "name": "hlidskjalf",
   "version": "0.1.0",
   "description": "A JavaScript game engine to power TeamHatguy's game development.",
-  "main": "build/main.js",
+  "main": "source/main.js",
   "scripts": {
     "lint": "eslint -c ./configuration/.eslintrc source/renderer.js --fix",
-    "build": "rm -r build/* && babel --config-file ./configuration/babel.config.js -d ./build source",
     "start": "electron .",
     "test": "jest --config ./configuration/jest.config.js --watch --coverage"
   },
