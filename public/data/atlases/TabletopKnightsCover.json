@@ -1,0 +1,11 @@
+{
+  "panels": [
+    {
+      "name": "cover",
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 1800
+    }
+  ]
+}
