@@ -1,5 +1,7 @@
 {
-  "animations": [
+  "imageURL": "riku.png",
+  "roles": [],
+  "costumes": [
     {
       "name": "walk-down",
       "frames": [
@@ -87,6 +89,20 @@
           "x": 182,
           "y": 59,
           "width": 25,
+          "height": 57
+        }
+      ],
+      "options": {
+        "mirror": true
+      }
+    },
+    {
+      "name": "idle",
+      "frames": [
+        {
+          "x": 59,
+          "y": 26,
+          "width": 29,
           "height": 57
         }
       ],

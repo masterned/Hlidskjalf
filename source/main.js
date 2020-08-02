@@ -11,6 +11,8 @@ const createWindow = () => {
   mainWindow.loadFile(join(__dirname, '..', 'public', 'views', 'primary.html'))
 }
 
+app.allowRendererProcessReuse = true
+
 app.whenReady().then(createWindow)
 
 app.on('window-all-closed', () => {

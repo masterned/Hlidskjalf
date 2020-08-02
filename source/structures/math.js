@@ -12,4 +12,8 @@ export class Vec2 {
     this.x += x
     this.y += y
   }
+
+  static get ZERO() {
+    return new Vec2(0, 0)
+  }
 }

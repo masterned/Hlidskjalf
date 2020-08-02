@@ -1,7 +1,8 @@
-import { loadSpriteSheet } from '../utilities/loaders.js'
-import { drawOn } from '../structures/SpriteSheet.js'
-import Timer from '../structures/Timer.js'
-import { Riku } from '../entities/Riku.js'
+import { loadLevel, loadImage, loadAtlas, loadJSONFrom } from '../loaders/loaders.js'
+import { drawImageBuffer } from '../functions/canvas.js'
+import { createAnimation } from '../structures/Animation.js'
+
+const { log } = console
 
 const canvas = document.createElement('canvas')
 canvas.width = window.innerWidth
@@ -13,28 +14,28 @@ const context = canvas.getContext('2d')
 context.fillStyle = '#555555'
 context.fillRect(0, 0, canvas.width, canvas.height)
 
-const createSpriteLayer = entity => {
-  return ctx => {
-    entity.draw(ctx)
+const loadAnimations = ({ image, costumes }) => animationsSpec =>
+  animationsSpec.forEach(animationSpec => costumes.set(animationSpec.name, createAnimation(image)(animationSpec)))
+
+class Actor {
+  constructor(image, { costumes: costumeSpec }) {
+    if (image) {
+      this.image = image
+      this.costumes = new Map()
+      loadAnimations(this, costumeSpec)
+    }
   }
 }
 
-Promise.all([
-  loadSpriteSheet('TabletopKnightsCover', 'jpg'),
-  loadSpriteSheet('riku', 'png')
-]).then(([coverSheet, rikuSheet]) => {
+const loadActor = name =>
+  loadJSONFrom('actors')(name)
+    .then(description => {
+      const { imageURL } = description
+      if (imageURL) loadImage(imageURL).then(image => log(new Actor(image, description))).catch(e => log('image load error:', e))
+    })
 
-  const riku = Riku(rikuSheet)
-
-  const drawOnContext = drawOn(context)
-
-  const t0 = new Timer()
-
-  t0.update = secondsPerFrame => {
-    drawOnContext(coverSheet, 'cover', 0, 0, canvas.width, canvas.height)
-    riku.update(secondsPerFrame)
-    riku.draw(context)
-  }
-
-  t0.start()
-})
+loadLevel('demo')
+  .then(({ actors }) => {
+    Promise.all(actors.map(({ name }) => loadActor(name)))
+      .catch(e => log('actor description load error:', e))
+  })

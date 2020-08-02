@@ -1,27 +1,34 @@
-import Animation from "./Animation.js"
-import Tile from "./Tile.js"
+import Animation from './Animation.js'
+// import { mkImageBuffer, setSize, get2DContext } from '../functions/canvas.js'
+import { curry } from '../utilities/functions.js'
 
 export default class SpriteSheet {
   constructor(image) {
     this.image = image
+    this.sprites = new Map()
+    this.animations = new Map()
+  }
+
+  defineSprite(name, x, y, width, height) {
+    // const buffer = setSize(width, height, mkImageBuffer())
+    const context = get2DContext(buffer)
+
+    context.drawImage(this.image, x, y, width, height, 0, 0, width, height)
+
+    this.sprites.set(name, buffer)
+  }
+
+  defineAnimation(name, animation) {
+    this.animations.set(name, animation)
+  }
+
+  draw() {
+
   }
 }
 
-export const defineTile = (sheet, name, x, y, width, height) => {
-  if (!sheet.tiles) sheet.tiles = new Map()
-
-  const buffer = bufferImage(sheet.image, x, y, width, height)
-  sheet.tiles.set(name, buffer)
-
-  return sheet
-}
-
-export const def_panel = sheet => ({ name, x, y, width, height }) => {
-  if (!sheet.panels) sheet.panels = new Map()
-
-  sheet.panels.set(name, Tile(sheet.image, x, y, width, height))
-
-  return sheet
+export const defineSprite = (sheet, { name, x, y, width, height }) => {
+  // sheet.sprites.set(name, mkImageBuffer(sheet.image, x, y, width, height))
 }
 
 export const def_anim = sheet => ({ name, frames }) => {
@@ -31,6 +38,10 @@ export const def_anim = sheet => ({ name, frames }) => {
 
   return sheet
 }
+
+export const draw = curry((context, sheet, name, x, y, width, height) => {
+
+})
 
 export const drawOn = context => (sheet, name, x, y, width, height) => {
   if (sheet.panels && sheet.panels.has(name)) {
@@ -46,12 +57,4 @@ export const drawOn = context => (sheet, name, x, y, width, height) => {
   }
 
   return false
-}
-
-export const draw = (context, sheet, sprite, x, y) => {
-  if (!sheet.sprites.has(sprite)) {
-    throw new Error('sprite not in sheet')
-  }
-  const buffer = sheet.sprites.get(sprite)
-  context.drawImage(buffer, x, y)
 }
